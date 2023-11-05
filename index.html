@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Registration</h1>
+    <form id="reg-form">
+        <input type="text" id="username" placeholder="Username"/>
+        <input type="password" placeholder="Password"/>
+    </form>
+    <script>
+        const form = document.getElementByID('reg-form')
+        form.addEvenListener('submit', registerUser)
+        //1. sending data as JSON (very common)
+        //2.sending data as urlencoded( very common when you're JS )
+        async function registerUser(event){
+            event.preventDefault() //prevent s.t which is default.action
+            const username = document.getElementByID('username')
+            const password = document.getElementByID('password')
+
+            const result = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringfy ({
+                    username,
+                    password
+                })
+            }).then(res => res.json())
+
+            console.log(result)
+
+        }
+    </script>
+</body>
+</html>
